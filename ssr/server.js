@@ -3,42 +3,88 @@ const path = require('path')
 const express = require('express')
 const { createServer: createViteServer } = require('vite')
 
-async function createServer() {
+const isTest = process.env.NODE_ENV === 'test' || !!process.env.VITE_TEST_BUILD
+
+async function createServer(
+  root = process.cwd(),
+  isProd = process.env.NODE_ENV === 'production'
+) {
+  const resolve = (p) => path.resolve(__dirname, p)
+  const indexProd = isProd
+    ? fs.readFileSync(resolve('dist/client/index.html'), 'utf-8')
+    : ''
+  const manifest = isProd
+    ? // @ts-ignore
+      require('./dist/client/ssr-manifest.json')
+    : {}
   const app = express()
-  console.log("test")
-  // ミドルウェアモードで Vite サーバを作成します。これにより、Vite 自体のHTMLが無効になります。
-  // ロジックを提供し、親サーバに制御を任せます。
-  //
-  // ミドルウェアモードで、Vite 自体の HTML 配信ロジックを使用したい場合は、
-  // `middlewareMode` として 'html' を使用します(参照 https://ja.vitejs.dev/config/#server-middlewaremode)
-  const vite = await createViteServer({
-    server: { middlewareMode: 'ssr' }
-  })
-  // Vite の接続インスタンスをミドルウェアとして使用します。
-  app.use(vite.middlewares)
+
+  console.log("start")
+
+  /**
+   * @type {import('vite').ViteDevServer}
+   */
+  let vite
+  if (!isProd) {
+    vite = await require('vite').createServer({
+      root,
+      logLevel: isTest ? 'error' : 'info',
+      server: {
+        middlewareMode: 'ssr',
+        watch: {
+          // During tests we edit the files too fast and sometimes chokidar
+          // misses change events, so enforce polling for consistency
+          usePolling: true,
+          interval: 100
+        }
+      }
+    })
+    // use vite's connect instance as middleware
+    app.use(vite.middlewares)
+  } else {
+    app.use(require('compression')())
+    app.use(
+      require('serve-static')(resolve('dist/client'), {
+        index: false
+      })
+    )
+  }
 
   app.use('*', async (req, res, next) => {
     const url = req.originalUrl
 
     try {
       // 1. index.html を読み込む
-      let template = fs.readFileSync(
-        path.resolve(__dirname, 'index.html'),
-        'utf-8'
-      )
+      // let template = fs.readFileSync(
+      //   path.resolve(__dirname, 'index.html'),
+      //   'utf-8'
+      // )
       // 2. Vite を使用して HTML への変換を適用します。これにより Vite の HMR クライアントが定義され
       //    Vite プラグインからの HTML 変換も適用します。 e.g. global preambles
       //    from @vitejs/plugin-react
-      template = await vite.transformIndexHtml(url, template)
+      // template = await vite.transformIndexHtml(url, template)
 
       // 3. サーバサイドのエントリポイントを読み込みます。 vite.ssrLoadModule は自動的に
       //    ESM を Node.js で使用できるコードに変換します! ここではバンドルは必要ありません
       //    さらに HMR と同様に効率的な無効化を提供します。
-      const { render } = await vite.ssrLoadModule('/src/entry-server.ts')
+      // const { render } = await vite.ssrLoadModule('/src/entry-server.ts')
+      
+      // https://github.com/vitejs/vite/blob/main/packages/playground/ssr-vue/server.js
+      let template, render
+      if (!isProd) {
+        // always read fresh template in dev
+        template = fs.readFileSync(resolve('index.html'), 'utf-8')
+        template = await vite.transformIndexHtml(url, template)
+        render = (await vite.ssrLoadModule('/src/entry-server.ts')).render
+      } else {
+        template = indexProd
+        render = require('./dist/server/entry-server.js').render
+      }
+      
       // 4. アプリケーションで HTML をレンダリングします。これは entry-server.js からエクスポートされた `render` を使用しています。
       //    関数は適切なフレームワーク SSR API を呼び出します。
       //    e.g. ReactDOMServer.renderToString()
-      const appHtml = await render(url)
+      const appHtml = await render(url,manifest)
 
       // 5. アプリケーションでレンダリングされた HTML をテンプレートに挿入します。
       const html = template.replace(`<!--ssr-outlet-->`, appHtml)

@@ -69,7 +69,7 @@ function renderPreloadLinks(modules:any, manifest:any) {
     })
   
   }catch(e){
-    // console.log(e)
+    console.log(e)
   }
   return links
 }
