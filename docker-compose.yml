@@ -8,7 +8,7 @@ services:
     container_name: dev-container
     ports:
       - 3000:3000
-      - 8080:8080
+      - 24678:24678 # refs: https://qiita.com/kiyoshiro/items/9dcba9af830f7ca51323
     tty: true # コンテナの起動永続化
     volumes:
       - .:/usr/src/app
