@@ -3,8 +3,8 @@ services:
 
   dev-container:
     build:
-      context: ./docker
-      dockerfile: LocalDevelopDockerfile
+      context: .
+      dockerfile: Dockerfile.local
     container_name: dev-container
     ports:
       - 3000:3000

@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "node server",
+    "dev:spa": "vite",
     "build.org": "vue-tsc --noEmit --skipLibCheck && vite build",
     "build": "npm run build:client && npm run build:server",
     "build:client": "vite build --ssrManifest --outDir dist/client",
