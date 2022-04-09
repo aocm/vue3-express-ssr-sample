@@ -1,7 +1,7 @@
 # 開発環境
 FROM node:17-slim
 WORKDIR /usr/src/app
-COPY ./ssr /usr/src/app
+COPY . /usr/src/app
 
 RUN npm ci && npm run build
 CMD  ["npm", "run", "serve"]
