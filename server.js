@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const express = require('express')
-const { createServer: createViteServer } = require('vite')
+const yamanikoRouter = require('./api/contoroller/yamabikoContoroller.ts')  //Import routes for "catalog" area of site
 
 const isTest = process.env.NODE_ENV === 'test' || !!process.env.VITE_TEST_BUILD
 
@@ -18,7 +18,7 @@ async function createServer(
       require('./dist/client/ssr-manifest.json')
     : {}
   const app = express()
-
+  app.use(express.json())
   console.log("start")
 
   /**
@@ -49,26 +49,22 @@ async function createServer(
       })
     )
   }
-
+  
+  app.use('/api/yamabiko', yamanikoRouter)
+  app.use('/test',async (req, res, next) => {
+    console.log(req.body)
+    res.json({test: "test"})
+  })
   app.use('*', async (req, res, next) => {
     const url = req.originalUrl
 
     try {
       // 1. index.html を読み込む
-      // let template = fs.readFileSync(
-      //   path.resolve(__dirname, 'index.html'),
-      //   'utf-8'
-      // )
       // 2. Vite を使用して HTML への変換を適用します。これにより Vite の HMR クライアントが定義され
       //    Vite プラグインからの HTML 変換も適用します。 e.g. global preambles
-      //    from @vitejs/plugin-react
-      // template = await vite.transformIndexHtml(url, template)
-
       // 3. サーバサイドのエントリポイントを読み込みます。 vite.ssrLoadModule は自動的に
       //    ESM を Node.js で使用できるコードに変換します! ここではバンドルは必要ありません
       //    さらに HMR と同様に効率的な無効化を提供します。
-      // const { render } = await vite.ssrLoadModule('/src/entry-server.ts')
-      
       // https://github.com/vitejs/vite/blob/main/packages/playground/ssr-vue/server.js
       let template, render
       if (!isProd) {
