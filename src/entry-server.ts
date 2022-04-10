@@ -1,15 +1,14 @@
 import { createSSRApp, App } from 'vue'
-import {createMemoryHistory, Router } from 'vue-router'
-import {createRouter} from './router'
+import { createMemoryHistory, Router } from 'vue-router'
+import { createRouter } from './router'
 import AppComponent from './App.vue'
 
 import { renderToString } from 'vue/server-renderer'
 import path, { basename } from 'path'
 
-
 export interface ServerEntryPoint {
-  app: App;
-  router: Router;
+  app: App
+  router: Router
 }
 
 export default function (): ServerEntryPoint {
@@ -21,8 +20,7 @@ export default function (): ServerEntryPoint {
   return { app, router }
 }
 
-export async function render(url:any, manifest:any) {
-
+export async function render(url: any, manifest: any) {
   const app = createSSRApp(AppComponent)
   const router = createRouter()
   app.use(router)
@@ -44,15 +42,14 @@ export async function render(url:any, manifest:any) {
   return [html, preloadLinks]
 }
 
-function renderPreloadLinks(modules:any, manifest:any) {
+function renderPreloadLinks(modules: any, manifest: any) {
   let links = ''
   const seen = new Set()
-  try{
-
-    modules.forEach((id:any) => {
+  try {
+    modules.forEach((id: any) => {
       const files = manifest[id]
       if (files) {
-        files.forEach((file:any) => {
+        files.forEach((file: any) => {
           if (!seen.has(file)) {
             seen.add(file)
             const filename = basename(file)
@@ -67,15 +64,13 @@ function renderPreloadLinks(modules:any, manifest:any) {
         })
       }
     })
-  
-  }catch(e){
+  } catch (e) {
     console.log(e)
   }
   return links
 }
 
-
-function renderPreloadLink(file:any) {
+function renderPreloadLink(file: any) {
   if (file.endsWith('.js')) {
     return `<link rel="modulepreload" crossorigin href="${file}">`
   } else if (file.endsWith('.ts')) {

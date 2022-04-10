@@ -1,6 +1,6 @@
 import { createSSRApp } from 'vue'
 import App from './App.vue'
-import {createRouter} from './router'
+import { createRouter } from './router'
 import store from './store'
 
 const app = createSSRApp(App)

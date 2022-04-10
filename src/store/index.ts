@@ -1,5 +1,13 @@
+/* eslint @typescript-eslint/no-explicit-any: 0 */
 import { InjectionKey } from 'vue'
-import { createStore, useStore as baseUseStore, Store, MutationTree, ActionTree, GetterTree } from 'vuex'
+import {
+  createStore,
+  useStore as baseUseStore,
+  Store,
+  MutationTree,
+  ActionTree,
+  GetterTree,
+} from 'vuex'
 
 // TODO削除
 // eslint-disable-next-line
@@ -25,22 +33,19 @@ const getters: GetterTree<State, any> = {
   // },
 }
 
-export const enum MUTATIONS {
-  // ここにはMutationの定義をおく。exportしているため、別ファイルからも利用が可能
-  // ADD =  'ADD'
-}
+export const enum MUTATIONS {}
+// ここにはMutationの定義をおく。exportしているため、別ファイルからも利用が可能
+// ADD =  'ADD'
 const mutations: MutationTree<State> = {
   // [MUTATIONS.ADD](state: any, newitem: SampleItem) {
   //   state.SampleList.push({ ...newitem });
   // }
 }
 
-const API_BASE = `${window.origin}/api` // TODO 環境変数
 const actions: ActionTree<State, any> = {
   // fetchSampleItem: async ({dispatch}, id: number)=>{
   //   return await fetch(`${API_BASE}/item/${id}`).then((res) => res.json())
   // },
-
 }
 
 export default createStore({
@@ -54,6 +59,6 @@ export default createStore({
 })
 
 // our own `useStore` composition function for types
-export function useStore () {
+export function useStore() {
   return baseUseStore(key)
 }
