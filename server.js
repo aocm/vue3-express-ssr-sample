@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const express = require('express')
-const yamanikoRouter = require('./api/contoroller/yamabikoContoroller.ts')  //Import routes for "catalog" area of site
+const yamanikoRouter = require('./src/api/contoroller/yamabikoContoroller.ts')  //Import routes for "catalog" area of site
 
 const isTest = process.env.NODE_ENV === 'test' || !!process.env.VITE_TEST_BUILD
 
