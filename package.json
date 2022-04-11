@@ -1,37 +1,23 @@
 {
-  "name": "frontend",
+  "name": "vue3-express-ssr-sample",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "コンテナ内での開発を想定しています。RemoteContainerを利用してもいいですし、シェルをアタッチしてもいいです",
   "scripts": {
-    "dev": "node server",
-    "dev:spa": "vite",
-    "build.org": "vue-tsc --noEmit --skipLibCheck && vite build",
-    "build": "npm run build:client && npm run build:server",
-    "build:client": "vite build --ssrManifest --outDir dist/client",
-    "build:server": "vite build --ssr src/entry-server.ts --outDir dist/server",
-    "serve": "cross-env NODE_ENV=production node server",
-    "check-types": "tsc --noEmit",
-    "eslint": "eslint src/**/*.ts",
-    "eslint:fix": "eslint src/**/*.ts --fix"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {
-    "express": "^4.17.3",
-    "ts-node": "^10.7.0",
-    "vue": "^3.2.25",
-    "vue-router": "^4.0.14",
-    "vuex": "^4.0.2"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aocm/vue3-express-ssr-sample.git"
   },
-  "devDependencies": {
-    "@types/node": "^17.0.23",
-    "@typescript-eslint/eslint-plugin": "^5.18.0",
-    "@typescript-eslint/parser": "^5.18.0",
-    "@vitejs/plugin-vue": "^2.3.0",
-    "compression": "^1.7.4",
-    "cross-env": "^7.0.3",
-    "eslint": "^8.13.0",
-    "eslint-plugin-vue": "^8.6.0",
-    "typescript": "^4.6.3",
-    "vite": "^2.9.0",
-    "vue-tsc": "^0.29.8"
-  }
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aocm/vue3-express-ssr-sample/issues"
+  },
+  "homepage": "https://github.com/aocm/vue3-express-ssr-sample#readme",
+  "workspaces": [
+    "e2e",
+    "ssr-server"
+  ]
 }

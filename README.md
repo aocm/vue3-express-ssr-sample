@@ -40,3 +40,7 @@ docker run -it -p 3001:3000 --name vue-express-ssr vue-express-ssr-image
 ```
 docker start vue-express-ssr
 ```
+
+## コンテナ内での操作
+- ビルド  
+rootディレクトリで `npm run build -w ssr-server` を実行するとビルドできます。
