@@ -1,0 +1,10 @@
+{
+  "name": "e2e",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "cypress": "^9.5.3"
+  }
+}
