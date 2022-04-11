@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "express": "^4.17.3",
-    "ts-node": "^10.7.0",
     "vue": "^3.2.25",
     "vue-router": "^4.0.14",
     "vuex": "^4.0.2"
