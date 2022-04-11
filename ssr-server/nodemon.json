@@ -1,0 +1,14 @@
+{
+  "restartable": "rs",
+  "env": {
+    "NODE_ENV": "dev"
+  },
+  "watch": [
+    "src",
+    "server.js"
+  ],
+  "ext": "js, ts, json, vue",
+  "ignore": [
+    "tests/**/*.ts"
+  ]
+}
