@@ -89,13 +89,18 @@ async function createServer(
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
     } catch (e) {
       // エラーが検出された場合は、Vite に stracktrace を修正させて、次のようにマップします。
-      // 実際のソースコード
       vite.ssrFixStacktrace(e)
       next(e)
     }
   })
 
-  app.listen(3000)
+  return { app, vite }
 }
 
-createServer()
+if (!isTest) {
+  createServer().then(({ app }) =>
+    app.listen(3000, () => {
+      console.log('http://localhost:3000')
+    })
+  )
+}
