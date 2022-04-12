@@ -1,11 +1,11 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Top</router-link>
+      <router-link id="toTopLink" to="/">Top</router-link>
       |
-      <router-link to="/about">About</router-link>
+      <router-link id="toAboutLink" to="/about">About</router-link>
       |
-      <router-link to="/yamabiko">Yamabiko</router-link>
+      <router-link id="toYamabikoLink" to="/yamabiko">Yamabiko</router-link>
     </div>
     <router-view/>
   </div>
