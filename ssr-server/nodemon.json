@@ -7,7 +7,7 @@
     "src",
     "server.js"
   ],
-  "ext": "js, ts, json, vue",
+  "ext": "js, ts, json",
   "ignore": [
     "tests/**/*.ts"
   ]
