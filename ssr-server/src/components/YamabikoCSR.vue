@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { ref } from "@vue/reactivity"
-import Yamabiko from "../domain/yamabiko"
+import { ref } from '@vue/reactivity'
+import Yamabiko from '../domain/yamabiko'
 const response = ref('')
 const message = ref('')
 
 const send = () => {
-  try{
+  try {
     const yamabiko = new Yamabiko(message.value)
     response.value = yamabiko.message
-  }catch(e){
+  } catch (e){
     window.alert(e.message)
   }
 }
@@ -16,14 +16,19 @@ const send = () => {
 
 <template>
   <h2>クライアント内操作パターン</h2>
-  <input 
+  <input
     id="yamabiko-input"
-    type="text" 
-    placeholder="say yahho!" 
     v-model="message"
-  />
-  <button id="yamabiko-button" @click="send">
+    type="text"
+    placeholder="say yahho!"
+  >
+  <button
+    id="yamabiko-button"
+    @click="send"
+  >
     send
   </button>
-  <p id="yamabiko-response">res: {{response}}</p>
+  <p id="yamabiko-response">
+    res: {{ response }}
+  </p>
 </template>

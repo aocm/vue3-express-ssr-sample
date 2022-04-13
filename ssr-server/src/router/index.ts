@@ -4,9 +4,9 @@ import {
   createWebHistory,
   RouteRecordRaw,
 } from 'vue-router'
-import Home from '../pages/Home.vue'
-import About from '../pages/About.vue'
-import Yamabiko from '../pages/Yamabiko.vue'
+import Home from '../pages/HomePage.vue'
+import About from '../pages/AboutPage.vue'
+import Yamabiko from '../pages/YamabikoPage.vue'
 import YamabikoResponse from '../components/YamabikoResponse.vue'
 
 const routes: Array<RouteRecordRaw> = [

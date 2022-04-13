@@ -31,7 +31,9 @@ const rules = { // 0 = off, 1 = warn, 2 = error
   // キーワードの前後には適切なスペースを
   'keyword-spacing': 2,
   // 行末スペース
-  'no-trailing-spaces': 2
+  'no-trailing-spaces': 2,
+  // vue3では問題ないためオフ
+  'vue/no-multiple-template-root': 0
 }
 
 module.exports = {
