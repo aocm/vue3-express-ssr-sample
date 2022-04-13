@@ -1,4 +1,4 @@
-module.exports = class Yamabiko {
+export default class Yamabiko {
   #_text
 
   get message() {

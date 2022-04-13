@@ -1,9 +1,16 @@
 <script setup lang="ts">
 import { ref } from "@vue/reactivity"
+import Yamabiko from "../domain/yamabiko"
 const response = ref('')
 const message = ref('')
+
 const send = () => {
-   response.value = message.value
+  try{
+    const yamabiko = new Yamabiko(message.value)
+    response.value = yamabiko.message
+  }catch(e){
+    window.alert(e.message)
+  }
 }
 </script>
 

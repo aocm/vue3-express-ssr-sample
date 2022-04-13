@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "nodemon server",
+    "dev": "nodemon --exec babel-node server",
     "dev:spa": "vite",
     "build.org": "vue-tsc --noEmit --skipLibCheck && vite build",
     "build": "npm run build:client && npm run build:server",
@@ -20,6 +20,9 @@
     "vue-router": "^4.0.14"
   },
   "devDependencies": {
+    "@babel/core": "^7.17.9",
+    "@babel/node": "^7.16.8",
+    "@babel/preset-env": "^7.16.11",
     "@types/node": "^17.0.23",
     "@typescript-eslint/eslint-plugin": "^5.18.0",
     "@typescript-eslint/parser": "^5.18.0",

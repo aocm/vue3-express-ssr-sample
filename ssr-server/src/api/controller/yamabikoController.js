@@ -1,5 +1,5 @@
-const express = require('express')
-const Yamabiko = require('../../domain/yamabiko')
+import express from 'express'
+import Yamabiko from '../../domain/yamabiko'
 const router = express.Router()
 
 router.get('/', (req, res, next) => {
@@ -16,4 +16,4 @@ router.post('/', (req, res, next) => {
   console.log(req.body)
   res.json(req.body)
 })
-module.exports = router
+export default router
