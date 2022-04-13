@@ -50,12 +50,8 @@ async function createServer(
     )
   }
   
-  // rest apiパターン
   app.use('/api/yamabiko', yamanikoRouter)
-  // form submitパターン
-  app.use('/form/yamabiko', async (req, res, next) => {
-    res.redirect('/yamabiko-res?message='+ req.query.message)
-  })
+
   app.use('/test', async (req, res, next) => {
     console.log(req.body)
     res.json({test: "test"})

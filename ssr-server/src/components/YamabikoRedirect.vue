@@ -18,7 +18,7 @@ const send = () => {
 
 <template>
   <h2>redirectパターン</h2>
-  <form action="/form/yamabiko" method="GET">
+  <form action="/api/yamabiko" method="GET">
     <input 
       id="yamabiko-form"
       type="text" 
