@@ -12,4 +12,12 @@ describe('Yamabiko Test', () => {
     // FizzBuzzという文言が表示されていることを確認する
     cy.get('#yamabiko-response').should('have.text', 'res: test')
   })
+  it('やまびこリダイレクト', () => {
+    cy.visit('/yamabiko')
+    cy.get('#yamabiko-form').type('test')
+    cy.get('#yamabiko-form-button').click()
+    // FizzBuzzという文言が表示されていることを確認する
+    cy.url().should('eq', 'http://localhost:3000/yamabiko-res?message=test')
+    cy.get('#yamabiko-response').should('have.text', 'res: test')
+  })
 })

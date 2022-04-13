@@ -7,6 +7,7 @@ import {
 import Home from '../pages/Home.vue'
 import About from '../pages/About.vue'
 import Yamabiko from '../pages/Yamabiko.vue'
+import YamabikoResponse from '../components/YamabikoResponse.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -23,6 +24,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/yamabiko',
     name: 'Yamabiko',
     component: Yamabiko,
+  },
+  {
+    path: '/yamabiko-res',
+    name: 'YamabikoResponse',
+    component: YamabikoResponse,
   },
 ]
 
