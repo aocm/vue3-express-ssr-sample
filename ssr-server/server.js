@@ -3,7 +3,6 @@ import path from 'path'
 import express from 'express'
 import yamanikoRouter from './src/api/controller/yamabikoController'
 
-
 const isTest = process.env.NODE_ENV === 'test' || !!process.env.VITE_TEST_BUILD
 
 async function createServer(
@@ -16,7 +15,7 @@ async function createServer(
     : ''
   const manifest = isProd
     ? // @ts-ignore
-      require('./dist/client/ssr-manifest.json')
+    require('./dist/client/ssr-manifest.json')
     : {}
   const app = express()
   app.use(express.json())
@@ -49,12 +48,12 @@ async function createServer(
       })
     )
   }
-  
+
   app.use('/api/yamabiko', yamanikoRouter)
 
-  app.use('/test', async (req, res, next) => {
+  app.use('/test', async (req, res) => {
     console.log(req.body)
-    res.json({test: "test"})
+    res.json({test: 'test'})
   })
   app.use('*', async (req, res, next) => {
     const url = req.originalUrl
@@ -77,14 +76,14 @@ async function createServer(
         template = indexProd
         render = require('./dist/server/entry-server.js').render
       }
-      
+
       // 4. アプリケーションで HTML をレンダリングします。これは entry-server.js からエクスポートされた `render` を使用しています。
       //    関数は適切なフレームワーク SSR API を呼び出します。
       //    e.g. ReactDOMServer.renderToString()
-      const appHtml = await render(url,manifest)
+      const appHtml = await render(url, manifest)
 
       // 5. アプリケーションでレンダリングされた HTML をテンプレートに挿入します。
-      const html = template.replace(`<!--ssr-outlet-->`, appHtml)
+      const html = template.replace('<!--ssr-outlet-->', appHtml)
 
       // 6. レンダリングされた HTML をクライアントに送ります。
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
