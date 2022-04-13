@@ -3,10 +3,14 @@ const Yamabiko = require('../../domain/yamabiko')
 const router = express.Router()
 
 router.get('/', (req, res, next) => {
-  const yamabiko = new Yamabiko(req.query.message)
-  console.log(yamabiko)
-  console.log(yamabiko._text)
-  res.redirect('/yamabiko-res?message='+ req.query.message)
+  try{
+    const yamabiko = new Yamabiko(req.query.message)
+    res.redirect('/yamabiko-res?message='+ yamabiko.message)
+  }catch (e){
+    console.warn(e.message)
+    res.redirect('/error?message='+e.message)
+  }
+  
 })
 router.post('/', (req, res, next) => {
   console.log(req.body)
