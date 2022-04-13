@@ -19,7 +19,6 @@ async function createServer(
     : {}
   const app = express()
   app.use(express.json())
-  console.log("start")
 
   /**
    * @type {import('vite').ViteDevServer}
@@ -101,7 +100,7 @@ async function createServer(
 if (!isTest) {
   createServer().then(({ app }) =>
     app.listen(3000, () => {
-      console.log('http://localhost:3000')
+      console.log('start http://localhost:3000')
     })
   )
 }
