@@ -73,8 +73,6 @@ function renderPreloadLinks(modules: any, manifest: any) {
 function renderPreloadLink(file: any) {
   if (file.endsWith('.js')) {
     return `<link rel="modulepreload" crossorigin href="${file}">`
-  } else if (file.endsWith('.ts')) {
-    return `<link rel="modulepreload" crossorigin href="${file}">`
   } else if (file.endsWith('.css')) {
     return `<link rel="stylesheet" href="${file}">`
   } else if (file.endsWith('.woff')) {
