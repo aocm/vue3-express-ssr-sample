@@ -10,7 +10,7 @@
     "build:client": "vite build --ssrManifest --outDir dist/client",
     "build:server": "vite build --ssr src/entry-server.ts --outDir dist/server",
     "serve": "cross-env NODE_ENV=production node server",
-    "test": "jest",
+    "test": "cross-env NODE_ENV=test jest",
     "check-types": "tsc --noEmit",
     "eslint:jest": "eslint __tests__/**/*.js --fix",
     "eslint:ts": "eslint src/**/*.ts --fix",
