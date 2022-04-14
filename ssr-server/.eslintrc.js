@@ -92,6 +92,22 @@ module.exports = {
         'plugin:vue/recommended',
       ],
       rules,
+    },
+    // Jest用
+    {
+      files: ['__tests__/**/*.js'],
+      env: {
+        'jest/globals': true,
+        'es6': true
+      },
+      plugins: [
+        'jest'
+      ],
+      extends: [
+        'plugin:jest/recommended',
+        'plugin:jest/style'
+      ],
+      rules,
     }
   ]
 }
