@@ -5,7 +5,7 @@ import yamanikoRouter from './src/api/controller/yamabikoController'
 
 const isTest = process.env.NODE_ENV === 'test' || !!process.env.VITE_TEST_BUILD
 
-async function createServer(
+export async function createServer(
   root = process.cwd(),
   isProd = process.env.NODE_ENV === 'production'
 ) {
@@ -20,6 +20,16 @@ async function createServer(
   const app = express()
   app.use(express.json())
 
+  app.use('/api/yamabiko', yamanikoRouter)
+
+  app.use('/test', async (req, res) => {
+    console.log(req.body)
+    res.json({test: 'test'})
+  })
+
+  if (isTest) return { app }// Jest実行時はviteをテストしない
+
+  // -----ここから下はVue+Vite-----
   /**
    * @type {import('vite').ViteDevServer}
    */
@@ -49,12 +59,6 @@ async function createServer(
     )
   }
 
-  app.use('/api/yamabiko', yamanikoRouter)
-
-  app.use('/test', async (req, res) => {
-    console.log(req.body)
-    res.json({test: 'test'})
-  })
   app.use('*', async (req, res, next) => {
     const url = req.originalUrl
 
@@ -97,6 +101,7 @@ async function createServer(
   return { app, vite }
 }
 
+console.log('isTest : ', isTest)
 if (!isTest) {
   createServer().then(({ app }) =>
     app.listen(3000, () => {
