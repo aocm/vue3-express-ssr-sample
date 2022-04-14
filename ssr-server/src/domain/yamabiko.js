@@ -1,4 +1,4 @@
-import yamabikoRegistry from "../infra/yamabikoRepository"
+import yamabikoRegistry from '../infra/yamabikoRepository'
 
 export default class Yamabiko {
   #_text
@@ -19,8 +19,8 @@ export default class Yamabiko {
       this.#number = yamabikoRegistry.saveMessage(this.#_text)
       console.log(this.#number)
     } catch (e) {
-      console.error("error: ", e)
-       throw new Error('予期せぬエラーが発生')
+      console.error('error: ', e)
+      throw new Error('予期せぬエラーが発生')
     }
   }
 }

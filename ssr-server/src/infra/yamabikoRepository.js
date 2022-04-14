@@ -1,5 +1,5 @@
 // DBの代わり
-let instance;
+let instance
 class Registry {
   #messages = []
   #count = 0
@@ -18,9 +18,9 @@ class Registry {
 
   constructor() {
     if (instance) {
-      throw new Error("You can only create one instance!");
+      throw new Error('You can only create one instance!')
     }
-    instance = this;
+    instance = this
   }
 }
 
