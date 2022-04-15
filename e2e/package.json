@@ -2,7 +2,7 @@
   "name": "e2e",
   "version": "1.0.0",
   "scripts": {
-    "cy:run": "cypress run"
+    "test": "cypress run"
   },
   "devDependencies": {
     "cypress": "^9.5.3"
