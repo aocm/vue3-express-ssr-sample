@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import express from 'express'
+import session from 'express-session'
 import yamanikoRouter from './src/api/controller/yamabikoController'
 import { logger } from './src/log/logger'
 
@@ -19,6 +20,23 @@ export async function createServer(
     require('./dist/client/ssr-manifest.json')
     : {}
   const app = express()
+  const sess = {
+    secret: 'secretkey',
+    cookie: { maxAge: 60000 },
+    resave: false,
+    saveUninitialized: true,
+  }
+  // app.set('trust proxy', 1)
+  // sess.cookie.secure = true
+  app.use(session(sess))
+  app.get('/session/test', (req, res) => {
+    if (req.session.views) {
+      req.session.views++
+    } else {
+      req.session.views = 1
+    }
+    res.send('views : ' + req.session.views)
+  })
   app.use(express.json())
   //. 全てのapiリクエストに対して前処理
   app.use('/api/*', function(req, res, next){
