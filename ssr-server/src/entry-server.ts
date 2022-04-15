@@ -2,7 +2,7 @@ import { createSSRApp, App } from 'vue'
 import { createMemoryHistory, Router } from 'vue-router'
 import { createRouter } from './router'
 import AppComponent from './App.vue'
-
+import {logger} from './log/logger'
 import { renderToString } from 'vue/server-renderer'
 import path, { basename } from 'path'
 
@@ -65,7 +65,7 @@ function renderPreloadLinks(modules: any, manifest: any) {
       }
     })
   } catch (e) {
-    console.log(e)
+    logger.error(e)
   }
   return links
 }

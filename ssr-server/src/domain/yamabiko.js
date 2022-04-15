@@ -17,9 +17,7 @@ export default class Yamabiko {
     this.#_text = props
     try {
       this.#number = yamabikoRegistry.saveMessage(this.#_text)
-      console.log(this.#number)
     } catch (e) {
-      console.error('error: ', e)
       throw new Error('予期せぬエラーが発生')
     }
   }

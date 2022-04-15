@@ -28,7 +28,7 @@ export async function createServer(
   app.use('/api/yamabiko', yamanikoRouter)
 
   app.use('/test', async (req, res) => {
-    console.log(req.body)
+    logger.info(req.body)
     res.json({test: 'test'})
   })
 
@@ -106,7 +106,7 @@ export async function createServer(
   return { app, vite }
 }
 
-console.log('isTest : ', isTest)
+logger.info('isTest : ', isTest)
 if (!isTest) {
   createServer().then(({ app }) =>
     app.listen(3000, () => {
