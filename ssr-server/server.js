@@ -21,10 +21,10 @@ export async function createServer(
   const app = express()
   app.use(express.json())
   //. 全てのapiリクエストに対して前処理
-  app.use( '/api/*', function( req, res, next ){
+  app.use('/api/*', function(req, res, next){
     logger.debug(req.originalUrl)
-    next();  //. 個別処理へ
-  });
+    next() //. 個別処理へ
+  })
   app.use('/api/yamabiko', yamanikoRouter)
 
   app.use('/test', async (req, res) => {
@@ -110,7 +110,7 @@ logger.info('isTest : ', isTest)
 if (!isTest) {
   createServer().then(({ app }) =>
     app.listen(3000, () => {
-      logger.info('start http://localhost:3000');
+      logger.info('start http://localhost:3000')
     })
   )
 }
