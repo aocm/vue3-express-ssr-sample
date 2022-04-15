@@ -38,7 +38,7 @@ export const log4jsConfig = {
       layout: logLayout,
       filename: path.join(logDirectory, "app.log"),
       pattern: "-yyyy-MM-dd",
-      daysToKeep: 7,
+      numBackups: 7,
       compress: true,
     },
   },
