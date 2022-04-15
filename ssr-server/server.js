@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import express from 'express'
 import yamanikoRouter from './src/api/controller/yamabikoController'
+import { logger } from './src/log/logger'
 
 const isTest = process.env.NODE_ENV === 'test' || !!process.env.VITE_TEST_BUILD
 
@@ -19,7 +20,11 @@ export async function createServer(
     : {}
   const app = express()
   app.use(express.json())
-
+  //. 全てのapiリクエストに対して前処理
+  app.use( '/api/*', function( req, res, next ){
+    logger.debug(req.originalUrl)
+    next();  //. 個別処理へ
+  });
   app.use('/api/yamabiko', yamanikoRouter)
 
   app.use('/test', async (req, res) => {
@@ -105,7 +110,7 @@ console.log('isTest : ', isTest)
 if (!isTest) {
   createServer().then(({ app }) =>
     app.listen(3000, () => {
-      console.log('start http://localhost:3000')
+      logger.info('start http://localhost:3000');
     })
   )
 }
