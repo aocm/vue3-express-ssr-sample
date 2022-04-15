@@ -9,7 +9,7 @@ router.get('/', (req, res, next) => {
     if (req.session.messages){
       req.session.messages.push(yamabiko.message)
     } else {
-      req.session.messages = []
+      req.session.messages = [yamabiko.message]
     }
     res.redirect('/yamabiko-res?message='+ yamabiko.message)
   }catch (e){
@@ -23,7 +23,7 @@ router.get('/history', (req, res, next) => {
     if (!req.session.messages){
       req.session.messages = []
     }
-    res.send(req.session.messages)
+    res.json({history:req.session.messages} )
   }catch (e){
     logger.warn(e.message)
     res.redirect('/error?message='+e.message)

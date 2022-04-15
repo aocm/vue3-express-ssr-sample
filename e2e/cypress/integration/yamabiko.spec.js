@@ -35,4 +35,20 @@ describe('Yamabiko Test', () => {
       cy.url().should('eq', 'http://localhost:3000/error?message=1~20%E6%96%87%E5%AD%97%E3%81%A7%E3%81%AA%E3%81%84')
     })
   })
+
+  context('session', () => {
+    it('セッション確認', () => {
+      cy.visit('/yamabiko')
+      cy.get('#yamabiko-form').type('test1')
+      cy.get('#yamabiko-form-button').click()
+      cy.get('#toYamabikoLink').click()
+      cy.get('#yamabiko-form').type('test2')
+      cy.get('#yamabiko-form-button').click()
+      cy.get('#toHistoryLink').click()
+        .then('',()=>{
+          cy.get('#history-1').should('have.text', 'test1')
+          cy.get('#history-2').should('have.text', 'test2')
+        })
+    })
+  })
 })
