@@ -9,7 +9,11 @@
       |
       <router-link id="toHistoryLink" to="/history">History</router-link>
     </div>
-    <router-view/>
+    <router-view v-slot="{ Component }">
+      <Suspense>
+        <component :is="Component" />
+      </Suspense>
+    </router-view>
   </div>
 </template>
 
