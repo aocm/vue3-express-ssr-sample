@@ -78,9 +78,10 @@ module.exports = {
     // Vue用
     {
       files: ['**/*.vue'],
+      parser: "vue-eslint-parser",
       parserOptions: {
         sourceType: 'module',
-        ecmaVersion: 12,
+        ecmaVersion: 13,
         tsconfigRootDir: __dirname,
         project: ['./tsconfig.eslint.json']
       },
