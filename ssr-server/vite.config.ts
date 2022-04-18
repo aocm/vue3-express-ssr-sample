@@ -7,7 +7,4 @@ plugins: [vue()],
   server: {
     host: true
   },
-  build: {
-    outDir: '../dist'
-  }
 })
