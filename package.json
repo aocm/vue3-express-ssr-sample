@@ -2,7 +2,7 @@
   "name": "vue3-express-ssr-sample",
   "private": true,
   "version": "1.0.0",
-  "description": "コンテナ内での開発を想定しています。RemoteContainerを利用してもいいですし、シェルをアタッチしてもいいです",
+  "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
