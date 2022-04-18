@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div>
     <div id="nav">
       <router-link id="toTopLink" to="/">Top</router-link>
       |

@@ -12,6 +12,8 @@ const getData = async (url, status400Message = '') => {
     return response.data
   } catch (error) {
     const response = error.response
+    if (response.status === 400 && status400Message) throw new Error(status400Message)
+    if (response.status >= 400) throw new Error(response.statusText || response.data.message)
   }
 }
 const postData = async (url, data = null, status400Message = '') => {
