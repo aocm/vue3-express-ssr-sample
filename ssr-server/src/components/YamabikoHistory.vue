@@ -1,12 +1,19 @@
 <script setup lang="ts">
-import { ref } from '@vue/runtime-core'
+import { ref, useSSRContext } from '@vue/runtime-core'
 import { getData } from '../utils/api'
 
+const isServer = import.meta.env.SSR
 const data = ref({history: []})
 const fetchData = async () => {
-  const res = await getData('/api/yamabiko/history')//.then((response)=>response.json())
-  data.value = res
+  if (isServer){
+    const ctx = useSSRContext()
+    data.value.history = ctx.session.messages
+  } else {
+    const res = await getData('/api/yamabiko/history')//.then((response)=>response.json())
+    data.value = res
+  }
 }
+
 fetchData()
 </script>
 

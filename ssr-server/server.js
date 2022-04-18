@@ -107,11 +107,11 @@ export async function createServer(
       // 4. アプリケーションで HTML をレンダリングします。これは entry-server.js からエクスポートされた `render` を使用しています。
       //    関数は適切なフレームワーク SSR API を呼び出します。
       //    e.g. ReactDOMServer.renderToString()
-      const appHtml = await render(url, manifest)
-
+      const [appHtml, preloadLinks] = await render(url, manifest, req.session)
       // 5. アプリケーションでレンダリングされた HTML をテンプレートに挿入します。
-      const html = template.replace('<!--ssr-outlet-->', appHtml)
-
+      const html = template
+        .replace('<!--preload-links-->', preloadLinks)
+        .replace('<!--app-html-->', appHtml)
       // 6. レンダリングされた HTML をクライアントに送ります。
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
     } catch (e) {

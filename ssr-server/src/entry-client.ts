@@ -1,12 +1,7 @@
-import { createSSRApp } from 'vue'
-import App from './App.vue'
-import { createRouter } from './router'
-
-const app = createSSRApp(App)
-const router = createRouter()
+import {createApp} from './main'
+const {app, router } = createApp()
 
 app.use(router)
-
 router.isReady().then(() => {
   app.mount('#app')
 })
