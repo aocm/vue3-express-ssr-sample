@@ -1,8 +1,16 @@
 # 開発環境
-FROM node:17-slim
+FROM node:17-slim AS build-env
 WORKDIR /usr/src/app
 COPY ./ssr-server /usr/src/app
 COPY package-lock.json /usr/src/app/package-lock.json
 
 RUN npm ci && npm run build
+
+FROM node:17-slim
+WORKDIR /usr/src/app
+COPY --from=build-env /usr/src/app/dist /usr/src/app/dist
+COPY --from=build-env /usr/src/app/package.json /usr/src/app/package.json
+COPY --from=build-env /usr/src/app/package-lock.json /usr/src/app/package-lock.json
+RUN npm ci --production
+
 CMD  ["npm", "run", "serve"]
