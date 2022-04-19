@@ -8,7 +8,10 @@
     "build": "npm-run-all -p build:*",
     "build:client": "vite build --ssrManifest --outDir dist/client",
     "build:server": "vite build --ssr src/entry-server.ts --outDir dist/server",
-    "serve": "cross-env NODE_ENV=production babel-node server",
+    "build:express-api": "babel src --out-dir dist/src",
+    "build:express-entry": "babel server.js --out-file dist/server.js",
+    "serve": "cross-env NODE_ENV=production node dist/server.js",
+    "s": "NODE_ENV=production node dist/server.js",
     "test": "cross-env NODE_ENV=test jest",
     "eslint:jest": "eslint __tests__/**/*.js --fix",
     "eslint:ts": "eslint src/**/*.ts --fix",
@@ -24,7 +27,9 @@
     ]
   },
   "dependencies": {
+    "@babel/preset-env": "^7.16.11",
     "axios": "^0.26.1",
+    "compression": "^1.7.4",
     "express": "^4.17.3",
     "express-session": "^1.17.2",
     "log4js": "^6.4.4",
@@ -32,15 +37,14 @@
     "vue-router": "^4.0.14"
   },
   "devDependencies": {
+    "@babel/cli": "^7.17.6",
     "@babel/core": "^7.17.9",
     "@babel/node": "^7.16.8",
     "@babel/plugin-transform-runtime": "^7.17.0",
-    "@babel/preset-env": "^7.16.11",
     "@types/node": "^17.0.23",
     "@typescript-eslint/eslint-plugin": "^5.18.0",
     "@typescript-eslint/parser": "^5.18.0",
     "@vitejs/plugin-vue": "^2.3.0",
-    "compression": "^1.7.4",
     "cross-env": "^7.0.3",
     "eslint": "^8.13.0",
     "eslint-plugin-jest": "^26.1.4",

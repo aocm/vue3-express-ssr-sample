@@ -13,11 +13,11 @@ export async function createServer(
 ) {
   const resolve = (p) => path.resolve(__dirname, p)
   const indexProd = isProd
-    ? fs.readFileSync(resolve('dist/client/index.html'), 'utf-8')
+    ? fs.readFileSync(resolve('./client/index.html'), 'utf-8')
     : ''
   const manifest = isProd
     ? // @ts-ignore
-    require('./dist/client/ssr-manifest.json')
+    require('./client/ssr-manifest.json')
     : {}
   const app = express()
   const sess = {
@@ -76,7 +76,7 @@ export async function createServer(
   } else {
     app.use(require('compression')())
     app.use(
-      require('serve-static')(resolve('dist/client'), {
+      require('serve-static')(resolve('./client'), {
         index: false
       })
     )
@@ -101,7 +101,7 @@ export async function createServer(
         render = (await vite.ssrLoadModule('/src/entry-server.ts')).render
       } else {
         template = indexProd
-        render = require('./dist/server/entry-server.js').render
+        render = require('./server/entry-server.js').render
       }
 
       // 4. アプリケーションで HTML をレンダリングします。これは entry-server.js からエクスポートされた `render` を使用しています。
