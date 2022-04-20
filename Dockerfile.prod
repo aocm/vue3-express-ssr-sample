@@ -1,4 +1,4 @@
-# 開発環境
+# ビルド環境
 FROM node:17-slim AS build-env
 WORKDIR /usr/src/app
 COPY ./ssr-server /usr/src/app
@@ -6,11 +6,13 @@ COPY package-lock.json /usr/src/app/package-lock.json
 
 RUN npm ci && npm run build
 
-FROM node:17-slim
+# 実行環境（prod想定）
+FROM node:17-alpine as runner
 WORKDIR /usr/src/app
 COPY --from=build-env /usr/src/app/dist /usr/src/app/dist
 COPY --from=build-env /usr/src/app/package.json /usr/src/app/package.json
 COPY --from=build-env /usr/src/app/package-lock.json /usr/src/app/package-lock.json
 RUN npm ci --production
+EXPOSE 3000
 
 CMD  ["npm", "run", "serve"]
