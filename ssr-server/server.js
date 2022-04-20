@@ -22,13 +22,16 @@ export async function createServer(
   const app = express()
   const sess = {
     secret: 'secretkey',
-    cookie: { maxAge: 60000 },
+    cookie: {
+      httpOnly: true,
+      maxAge: 60000 // 簡易的に1分としている
+    },
     resave: false,
     saveUninitialized: true,
   }
-  // app.set('trust proxy', 1)
-  // sess.cookie.secure = true
+  // if (isProd) sess.cookie.secure = true // httpsにするならtrueにする
   app.use(session(sess))
+  // session機能のサンプル（消してよい）
   app.get('/session/test', (req, res) => {
     if (req.session.views) {
       req.session.views++
