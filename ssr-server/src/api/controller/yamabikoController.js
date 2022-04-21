@@ -17,6 +17,20 @@ router.get('/', (req, res, next) => {
     res.redirect('/error?message='+e.message)
   }
 })
+router.post('/', (req, res, next) => {
+  try{
+    const yamabiko = new Yamabiko(req.body.message)
+    if (req.session.messages){
+      req.session.messages.push(yamabiko.message)
+    } else {
+      req.session.messages = [yamabiko.message]
+    }
+    res.redirect('/yamabiko-res?message='+ yamabiko.message)
+  }catch (e){
+    logger.warn(e.message)
+    res.redirect('/error?message='+e.message)
+  }
+})
 
 router.get('/history', (req, res, next) => {
   try{
@@ -30,9 +44,5 @@ router.get('/history', (req, res, next) => {
   }
 })
 
-router.post('/', (req, res, next) => {
-  logger.info(req.body)
-  res.json(req.body)
-})
 
 export default router

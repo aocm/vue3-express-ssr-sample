@@ -41,6 +41,7 @@ export async function createServer(
     res.send('views : ' + req.session.views)
   })
   app.use(express.json())
+  app.use(express.urlencoded({ extended: true }))
   //. 全てのapiリクエストに対して前処理
   app.use('/api/*', function(req, res, next){
     logger.debug(req.originalUrl)

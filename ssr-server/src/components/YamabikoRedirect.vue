@@ -19,7 +19,7 @@ const message = ref('')
   <h2>redirectパターン</h2>
   <form
     action="/api/yamabiko"
-    method="GET"
+    method="POST"
   >
     <input
       id="yamabiko-form"
