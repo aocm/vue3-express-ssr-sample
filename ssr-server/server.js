@@ -3,6 +3,7 @@ import path from 'path'
 import compression from 'compression'
 import serveStatic from 'serve-static'
 import { createExpressApp } from './src/express-base'
+import { getMeta } from './src/metas'
 
 const isTest = process.env.NODE_ENV === 'test' || !!process.env.VITE_TEST_BUILD
 const resolve = (p) => path.resolve(__dirname, p)
@@ -30,6 +31,7 @@ export async function createDevServer(root = process.cwd()) {
 
   app.use('*', async (req, res, next) => {
     const url = req.originalUrl
+    const {htmlTitle, htmlDescription} = getMeta(req.baseUrl)
     try {
       const template = await vite.transformIndexHtml(url, fs.readFileSync(resolve('index.html'), 'utf-8'))
       const render = (await vite.ssrLoadModule('/src/entry-server.ts')).render
@@ -37,6 +39,8 @@ export async function createDevServer(root = process.cwd()) {
       const html = template
         .replace('<!--preload-links-->', preloadLinks)
         .replace('<!--app-html-->', appHtml)
+        .replace('<title>vue3-express-ssr-sample</title>', `<title>${htmlTitle}</title>`)
+        .replace('<!-- meta-description-space -->', `<meta name="description" content="${htmlDescription}" />`)
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
     } catch (e) {
       // エラーが検出された場合は、Vite に stracktrace を修正させて、次のようにマップします。
@@ -60,6 +64,7 @@ export function createProdServer() {
   )
   app.use('*', async (req, res, next) => {
     const url = req.originalUrl
+    const {htmlTitle, htmlDescription} = getMeta(req.baseUrl)
     try {
       const template = indexProd
       const render = require('./server/entry-server.js').render
@@ -67,6 +72,8 @@ export function createProdServer() {
       const html = template
         .replace('<!--preload-links-->', preloadLinks)
         .replace('<!--app-html-->', appHtml)
+        .replace('<title>vue3-express-ssr-sample</title>', `<title>${htmlTitle}</title>`)
+        .replace('<!-- meta-description-space -->', `<meta name="description" content="${htmlDescription}" />`)
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
     } catch (e) {
       next(e)
