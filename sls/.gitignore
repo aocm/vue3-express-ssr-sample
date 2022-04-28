@@ -1,0 +1,8 @@
+# これらはコピーされてくるだけなので、コミットしない
+dist
+node_modules
+package.json
+package-lock.json
+
+# オフライン実行するとログが吐き出されることがあるため
+logs

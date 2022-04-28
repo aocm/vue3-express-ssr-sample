@@ -1,0 +1,15 @@
+service: aws-node-express-ssr-sample
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+
+functions:
+  api:
+    handler: handler.handler
+    events:
+      - httpApi: '*'
+
+plugins:
+  - serverless-offline
