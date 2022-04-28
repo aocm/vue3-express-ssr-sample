@@ -2,15 +2,14 @@ import fs from 'fs'
 import path from 'path'
 import compression from 'compression'
 import serveStatic from 'serve-static'
-import { createExpressApp } from './src/express'
-import { logger } from './src/log/logger'
+import { createExpressApp } from './src/express-base'
 
 const isTest = process.env.NODE_ENV === 'test' || !!process.env.VITE_TEST_BUILD
-const isProd = process.env.NODE_ENV === 'production'
 const resolve = (p) => path.resolve(__dirname, p)
 
 export async function createDevServer(root = process.cwd()) {
   const app = createExpressApp()
+  if (isTest) return { app }// Jest実行時はvite/ssr処理をテストしない
 
   // 以下DEV用SSR処理
   const manifest ={}
@@ -75,17 +74,4 @@ export function createProdServer() {
   })
 
   return { app }
-}
-
-if (!isTest && !isProd) {
-  createDevServer().then(({ app }) =>
-    app.listen(3000, () => {
-      logger.info('start dev http://localhost:3000')
-    })
-  )
-} else if (isProd){
-  const { app } = createProdServer()
-  app.listen(3000, () => {
-    logger.info('start prod http://localhost:3000')
-  })
 }
