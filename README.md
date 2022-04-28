@@ -17,6 +17,14 @@
     - 例） `docker run -it -p 3001:3000 --name vue-express-ssr vue-express-ssr-image`
     - 環境変数などもコマンドで付与が可能
 
+### sls offlineをつかって動作確認する
+local用のdockerにslsをインストールしてあるので、それを利用します。
+
+1. プロジェクトrootで`sh sls-prepare.sh` を実行する
+1. `cd sls`
+1. `sls offline --host 0.0.0.0` を実行する
+1. ホスト上で http://localhost:3000/ にアクセスして動作確認を行う
+
 ## 各操作の詳細
 
 ### ローカルで開発の仕方
