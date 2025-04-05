@@ -1,6 +1,9 @@
 # vue3-express-ssr-sample
 ViteでVue3をビルドしてExperssでSSRするアプリのスケルトンです。
 
+## 注意(2025/04/05追記)
+- cypressのバージョンが9で古いです。バージョンを上げる場合はe2eフォルダ以下全部作り直した方が早いと思います。
+
 ## 導入内容
 - ViteでVue3をSSRしてExpressでホストする
     - metaの更新(SEO対策)
@@ -27,7 +30,7 @@ ViteでVue3をビルドしてExperssでSSRするアプリのスケルトンで�
     - rootディレクトリで `npm ci` を実行してコンテナ内で依存モジュールのインストール
     - rootディレクトリで `npm run dev -w ssr-server` を実行して起動
     - rootディレクトリで `npm run eslint:fix -w ssr-server` を実行してlint
-    - rootディレクトリで `npm run cy:run -w e2e` を実行して全件テスト実行
+    - rootディレクトリで `npm run test -w e2e` を実行して全件テスト実行
         - 個別に確認する場合は`npx cypress run -s "cypress/integration/yamabiko.spec.js"` のように指定可能
         - フォルダ単位で実行するなら`-s "cypress/integration/dirA/*"`とすることも可能
     - rootディレクトリで `npm run build -w ssr-server` を実行してビルド。
